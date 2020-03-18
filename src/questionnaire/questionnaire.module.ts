@@ -1,3 +1,12 @@
+/*
+ * @Description: 问卷Module
+ * @GitHub: https://github.com/Jensen02
+ * @Author: Jensen
+ * @Date: 2020-03-11 18:04:10
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-03-11 18:04:28
+ */
+
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuestionnaireController } from './questionnaire.controller';

@@ -5,14 +5,15 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:55:58
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-11 17:56:22
+ * @LastEditTime: 2020-03-11 19:19:44
  */
 
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
 import { Multiple } from './multiple.entity';
 import { Radio } from './radio.entity';
 import { Answer } from './answer.entity';
 import { Judge } from './judge.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Questionnaire {
@@ -36,6 +37,9 @@ export class Questionnaire {
 
   @Column()
   state: string;               // 问卷当前状态
+
+  @Column()
+  isDelete: boolean;           // 问卷是否放入回收站
 
   @Column()
   endTime: string;             // 问卷结束时间
@@ -63,4 +67,7 @@ export class Questionnaire {
     cascade: true
   })
   judges: Judge[];
+
+  @ManyToOne(type => User, user => user.questionnaires)
+  user: string;
 }
