@@ -4,15 +4,15 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:34:22
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-11 17:55:18
+ * @LastEditTime: 2020-03-19 18:14:30
  */
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { Questionnaire } from './questionnaire.entity';
+import { Questionnaire } from '../questionnaire/questionnaire.entity';
 
 @Entity()
 export class Answer {
   @PrimaryColumn()
-  aId: string;
+  id: string;
 
   @Column()
   type: string;
@@ -20,7 +20,9 @@ export class Answer {
   @Column()
   problem: string;
 
-  @Column('text')
+  @Column('text', {
+    nullable: true
+  })
   answer: string;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

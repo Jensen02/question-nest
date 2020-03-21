@@ -4,16 +4,16 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:55:28
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-11 17:55:49
+ * @LastEditTime: 2020-03-19 17:36:02
  */
 
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { Questionnaire } from './questionnaire.entity';
+import { Questionnaire } from '../questionnaire/questionnaire.entity';
 
 @Entity()
 export class Radio {
   @PrimaryColumn()
-  rId: string;
+  id: string;
 
   @Column()
   type: string;
@@ -21,28 +21,44 @@ export class Radio {
   @Column()
   problem: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   aContent: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   bContent: string;
   
-  @Column()
+  @Column({
+    default: ''
+  })
   cContent: string;
   
-  @Column()
+  @Column({
+    default: ''
+  })
   dContent: string;
 
-  @Column()
+  @Column({
+    default: 0
+  })
   aNumber: number;
   
-  @Column()
+  @Column({
+    default: 0
+  })
   bNumber: number;
   
-  @Column()
+  @Column({
+    default: 0
+  })
   cNumber: number;
   
-  @Column()
+  @Column({
+    default: 0
+  })
   dNumber: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

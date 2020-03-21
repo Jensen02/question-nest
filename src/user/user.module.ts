@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-16 00:06:24
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-16 00:07:54
+ * @LastEditTime: 2020-03-18 22:48:44
  */
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -16,6 +16,7 @@ import { User } from './user.entity'
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService]
 })
 
 export class UserModule {}

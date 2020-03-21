@@ -4,16 +4,16 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:54:06
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-11 17:54:39
+ * @LastEditTime: 2020-03-19 18:35:12
  */
 
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm'
-import { Questionnaire } from './questionnaire.entity';
+import { Questionnaire } from '../questionnaire/questionnaire.entity';
 
 @Entity()
 export class Judge {
   @PrimaryColumn()
-  jId: string;
+  id: string;
 
   @Column()
   type: string;
@@ -21,16 +21,24 @@ export class Judge {
   @Column()
   problem: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   yesContent: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   noContent: string;
 
-  @Column()
+  @Column({
+    default: 0
+  })
   yesNumber: number;
 
-  @Column()
+  @Column({
+    default: 0
+  })
   noNumber: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

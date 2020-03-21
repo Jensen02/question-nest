@@ -5,14 +5,14 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:55:58
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-11 19:19:44
+ * @LastEditTime: 2020-03-19 17:45:47
  */
 
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
-import { Multiple } from './multiple.entity';
-import { Radio } from './radio.entity';
-import { Answer } from './answer.entity';
-import { Judge } from './judge.entity';
+import { Multiple } from '../enties/multiple.entity'
+import { Radio } from '../enties/radio.entity';
+import { Answer } from '../enties/answer.entity';
+import { Judge } from '../enties/judge.entity';
 import { User } from '../user/user.entity';
 
 @Entity()
@@ -26,19 +26,27 @@ export class Questionnaire {
   @Column('text')
   description: string;         // 问卷描述
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   filePath: string;            // 问卷封面图片路径
 
-  @Column()
+  @Column({
+    default: 0
+  })
   attendNumber: number;        // 已参加问卷人数
 
   @Column()
   personLimit: number;         // 问卷限制人数
 
-  @Column()
+  @Column({
+    default: 'create'
+  })
   state: string;               // 问卷当前状态
 
-  @Column()
+  @Column({
+    default: false
+  })
   isDelete: boolean;           // 问卷是否放入回收站
 
   @Column()
@@ -69,5 +77,5 @@ export class Questionnaire {
   judges: Judge[];
 
   @ManyToOne(type => User, user => user.questionnaires)
-  user: string;
+  user: User;
 }

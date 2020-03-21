@@ -4,16 +4,16 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:53:42
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-11 17:55:03
+ * @LastEditTime: 2020-03-19 17:35:03
  */
 
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { Questionnaire } from './questionnaire.entity'
+import { Questionnaire } from '../questionnaire/questionnaire.entity'
 
 @Entity()
 export class Multiple {
   @PrimaryColumn()
-  mId: string;
+  id: string;
 
   @Column()
   type: string;
@@ -21,40 +21,64 @@ export class Multiple {
   @Column()
   problem: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   aContent: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   bContent: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   cContent: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   dContent: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   eContent: string;
 
-  @Column()
+  @Column({
+    default: ''
+  })
   fContent: string;
 
-  @Column()
+  @Column({
+    default: 0
+  })
   aNumber: number;
 
-  @Column()
+  @Column({
+    default: 0
+  })
   bNumber: number;
   
-  @Column()
+  @Column({
+    default: 0
+  })
   cNumber: number;
   
-  @Column()
+  @Column({
+    default: 0
+  })
   dNumber: number;
   
-  @Column()
+  @Column({
+    default: 0
+  })
   eNumber: number;
   
-  @Column()
+  @Column({
+    default: 0
+  })
   fNumber: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
