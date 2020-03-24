@@ -5,7 +5,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 20:29:21
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-19 16:18:40
+ * @LastEditTime: 2020-03-22 13:06:46
  */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -48,12 +48,14 @@ export class UserService {
 
   // 获取用户id
   async getUserIdWithSkey(skey: string): Promise<User> {
+    console.log('skey: ', skey);
     const data = await this.userRepository.find({
       select: ['uId'],
       where: {
         skey: skey
       }
     });
+    console.log('use: ', data[0]);
     return data[0];
   }
 }

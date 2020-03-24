@@ -4,12 +4,12 @@
  * @Author: Jensen
  * @Date: 2020-03-11 18:03:22
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-22 01:15:39
+ * @LastEditTime: 2020-03-25 00:29:02
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Equal } from 'typeorm';
 import { Questionnaire } from './questionnaire.entity';
 
 @Injectable()
@@ -47,7 +47,54 @@ export class QuestionnaireService {
     };
   }
 
-  // async updateQuestion() {
-    
-  // }  
+  // 根据问卷状态查询问卷
+  async getAllQuestions(state: string) {
+    const allQuestions = await this.questionnaireRepository.find({ state: Equal(state) });
+    return {
+      code: 1,
+      message: '查询成功',
+      data: allQuestions
+    };
+  }
+
+  // 根据问卷id删除问卷
+  async deleteQuestionWithId(id: string) {
+    const deletsService = await this.questionnaireRepository.delete(id);
+    console.log('deSer: ', deletsService);
+    if (deletsService) {
+      return {
+        code: 1,
+        message: '问卷删除成功',
+        data: deletsService
+      };
+    }
+  }
+
+  // 将问卷放入回收站
+  async recoverQuestion(id: string) {
+    const cService = await this.questionnaireRepository.update(id, {
+      isDelete: true
+    });
+    if (cService) {
+      return {
+        code: 1,
+        message: '问卷回收成功',
+        data: cService
+      };
+    }
+  }
+
+  // 更新问卷状态
+  async updateQuestionState(id: string, state: string) {
+    const uService = await this.questionnaireRepository.update(id, {
+      state
+    });
+    if (uService) {
+      return {
+        code: 1,
+        message: '问卷状态更新成功',
+        data: uService
+      };
+    }
+  }
 }
