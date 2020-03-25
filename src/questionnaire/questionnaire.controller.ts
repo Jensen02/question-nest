@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 18:02:52
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-25 00:28:36
+ * @LastEditTime: 2020-03-25 13:47:30
  */
 import { Controller, Body, Post, Get, Query } from '@nestjs/common';
 import { randomWord } from '../utils';
@@ -13,7 +13,7 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import { CreateQuesOrTempDto } from '../dto';
 import { createTopicArray } from '../utils';
-import { stat } from 'fs';
+// import { stat } from 'fs';
 
 @Controller('questionnaire')
 export class QuestionnaireController {
@@ -78,7 +78,7 @@ export class QuestionnaireController {
   }
 
   // 根据问卷id删除问卷
-  @Post('delete')
+  @Post('collection/delete')
   async deleteQuestionWithId(@Body('id') id: string) {
     console.log('delete: ', id);
     if (!id.length) {
@@ -120,5 +120,27 @@ export class QuestionnaireController {
     }
     const uController = await this.questionnaireService.updateQuestionState(id, state);
     return uController;
+  }
+
+  // 获取所有已放入回收站的问卷
+  @Get('collection/query/all')
+  async getAllCollectionItems() {
+    const cController = await this.questionnaireService.getAllCollectionItems();
+    return cController;
+  }
+
+  // 还原问卷
+  @Post('collection/recover')
+  async recoverQuestionnaireWithId(@Body('id') id: string) {
+    console.log('re: ', id);
+    if (!id.length) {
+      return {
+        code: 0,
+        message: '参数异常',
+        data: {}
+      };
+    }
+    const rController = await this.questionnaireService.recoverQuestionnaireWithId(id);
+    return rController;
   }
 }

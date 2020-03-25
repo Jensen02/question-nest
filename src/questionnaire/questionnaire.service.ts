@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 18:03:22
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-25 00:29:02
+ * @LastEditTime: 2020-03-25 13:41:22
  */
 
 import { Injectable } from '@nestjs/common';
@@ -94,6 +94,36 @@ export class QuestionnaireService {
         code: 1,
         message: '问卷状态更新成功',
         data: uService
+      };
+    }
+  }
+
+  // 获取所有已放入回收站的问卷
+  async getAllCollectionItems() {
+    const cService = await this.questionnaireRepository.find({
+      where: {
+        isDelete: true
+      }
+    });
+    if (cService) {
+      return {
+        code: 1,
+        message: '回收站问卷查询成功',
+        data: cService
+      };
+    }
+  }
+
+  // 还原问卷
+  async recoverQuestionnaireWithId(id: string) {
+    const rService = await this.questionnaireRepository.update(id, {
+      isDelete: false
+    });
+    if (rService) {
+      return {
+        code: 1,
+        message: '问卷还原成功',
+        data: rService
       };
     }
   }
