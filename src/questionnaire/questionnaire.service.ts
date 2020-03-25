@@ -4,12 +4,12 @@
  * @Author: Jensen
  * @Date: 2020-03-11 18:03:22
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-25 13:41:22
+ * @LastEditTime: 2020-03-25 23:56:44
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Equal } from 'typeorm';
+import { Repository, Equal, Not } from 'typeorm';
 import { Questionnaire } from './questionnaire.entity';
 
 @Injectable()
@@ -49,7 +49,10 @@ export class QuestionnaireService {
 
   // 根据问卷状态查询问卷
   async getAllQuestions(state: string) {
-    const allQuestions = await this.questionnaireRepository.find({ state: Equal(state) });
+    const allQuestions = await this.questionnaireRepository.find({ 
+      state: Equal(state),
+      isDelete: Not(true)
+    });
     return {
       code: 1,
       message: '查询成功',
