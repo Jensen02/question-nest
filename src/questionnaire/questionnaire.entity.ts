@@ -5,7 +5,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:55:58
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-19 17:45:47
+ * @LastEditTime: 2020-03-27 23:57:00
  */
 
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
@@ -60,19 +60,22 @@ export class Questionnaire {
 
   @OneToMany(type => Radio, radio => radio.questionnaire, {
     eager: true,
-    cascade: true
+    cascade: true,
+    onDelete: 'CASCADE'
   })
   radios: Radio[];
 
   @OneToMany(type => Answer, answer => answer.questionnaire, {
     eager: true,
-    cascade: true
+    cascade: true,
+    onDelete: 'CASCADE'
   })
   answers: Answer[];
 
   @OneToMany(type => Judge, judge => judge.questionnaire, {
     eager: true,
-    cascade: true
+    cascade: true,
+    onDelete: 'CASCADE'
   })
   judges: Judge[];
 
