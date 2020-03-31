@@ -4,11 +4,12 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:55:28
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-28 13:51:43
+ * @LastEditTime: 2020-03-31 21:14:39
  */
 
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
 import { Questionnaire } from '../questionnaire/questionnaire.entity';
+import { Templete } from '../template/template.entity';
 
 @Entity()
 export class Radio {
@@ -66,4 +67,10 @@ export class Radio {
     onDelete: 'CASCADE'
   })
   questionnaire: Questionnaire;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @ManyToOne(type => Templete, templete => templete.radios, {
+    onDelete: 'CASCADE'
+  })
+  templete: Templete;
 }

@@ -4,10 +4,11 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:34:22
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-28 13:52:28
+ * @LastEditTime: 2020-03-31 21:15:34
  */
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
 import { Questionnaire } from '../questionnaire/questionnaire.entity';
+import { Templete } from '../template/template.entity';
 
 @Entity()
 export class Answer {
@@ -30,4 +31,10 @@ export class Answer {
     onDelete: 'CASCADE'
   })
   questionnaire: Questionnaire;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @ManyToOne(type => Templete, templete => templete.answers, {
+    onDelete: 'CASCADE'
+  })
+  templete: Templete;
 }

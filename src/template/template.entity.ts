@@ -5,7 +5,7 @@
  * @Author: Jensen
  * @Date: 2020-03-19 00:21:24
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-28 13:54:21
+ * @LastEditTime: 2020-03-31 21:41:06
  */
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
 import { Multiple } from '../enties/multiple.entity'
@@ -34,48 +34,33 @@ export class Templete {
   filePath: string;            // 问卷封面图片路径
 
   @Column({
-    default: 0
-  })
-  attendNumber: number;        // 已参加问卷人数
-
-  @Column({
     // nullable: true,
     default: 0
   })
   personLimit: number;         // 问卷限制人数
 
-  @Column({
-    default: 'create'
-  })
-  state: string;               // 问卷当前状态
-
-  @Column({
-    default: false
-  })
-  isDelete: boolean;           // 问卷是否放入回收站
-
   @Column()
   endTime: string;             // 问卷结束时间
 
-  @OneToMany(type => Multiple, multiple => multiple.questionnaire, {
+  @OneToMany(type => Multiple, multiple => multiple.templete, {
     eager: true,
     cascade: true
   })
   multiples: Multiple[];
 
-  @OneToMany(type => Radio, radio => radio.questionnaire, {
+  @OneToMany(type => Radio, radio => radio.templete, {
     eager: true,
     cascade: true
   })
   radios: Radio[];
 
-  @OneToMany(type => Answer, answer => answer.questionnaire, {
+  @OneToMany(type => Answer, answer => answer.templete, {
     eager: true,
     cascade: true
   })
   answers: Answer[];
 
-  @OneToMany(type => Judge, judge => judge.questionnaire, {
+  @OneToMany(type => Judge, judge => judge.templete, {
     eager: true,
     cascade: true
   })
