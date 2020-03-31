@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-19 18:10:50
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-22 01:13:46
+ * @LastEditTime: 2020-03-31 20:30:40
  */
 import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { createTopicArray, randomWord } from '../utils'
@@ -43,8 +43,9 @@ export class TempleteController {
     return tController;
   }
 
+  // 根据模板类型获取模板列表
   @Get('query/list')
-  async getTempleteWithType(@Query('type') type) {
+  async getTempleteWithType(@Query('type') type: string) {
     if (!type.length) {
       return {
         code: 0,
@@ -55,5 +56,20 @@ export class TempleteController {
 
     const tController = await this.templeteService.getTempletesWithType(type);
     return tController;
+  }
+
+  // 根据模板id获取模板题目
+  @Get('query/id')
+  async getTempleteItemWithId(@Query('id') id: string) {
+    if (!id.length) {
+      return {
+        code: 0,
+        message: '参数异常',
+        data: {}
+      };
+    }
+
+    const gController = await this.templeteService.getTempleteItemWithId(id);
+    return gController;
   }
 }

@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-19 18:11:32
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-22 01:10:48
+ * @LastEditTime: 2020-03-31 20:30:02
  */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -37,9 +37,9 @@ export class TempleteService {
   }
 
   // 根据模板类型，获取模板列表
-  async getTempletesWithType(type) {
+  async getTempletesWithType(type: string) {
     const tService =await this.templeteRepository.find({
-      select: ['type', 'title', 'description', 'endTime', 'personLimit', 'multiples', 'radios', 'answers', 'judges'],
+      // select: ['type', 'title', 'description', 'endTime', 'personLimit', 'multiples', 'radios', 'answers', 'judges'],
       where: {
         type
       }
@@ -49,5 +49,22 @@ export class TempleteService {
       message: '获取模板列表成功',
       data: tService
     }
+  }
+
+  // 根据模板id获取模板题目
+  async getTempleteItemWithId(id: string) {
+    const gService = await this.templeteRepository.findOne(id);
+    if (!gService) {
+      return {
+        code: 0,
+        message: '模板获取失败',
+        data: {}
+      };
+    }
+    return {
+      code: 1,
+      message: '模板获取成功',
+      data: gService
+    };
   }
 }
