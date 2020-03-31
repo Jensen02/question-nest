@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:53:42
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-19 17:35:03
+ * @LastEditTime: 2020-03-28 13:52:06
  */
 
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
@@ -82,6 +82,8 @@ export class Multiple {
   fNumber: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @ManyToOne(type => Questionnaire, questionnaire => questionnaire.multiples)
+  @ManyToOne(type => Questionnaire, questionnaire => questionnaire.multiples, {
+    onDelete: 'CASCADE'
+  })
   questionnaire: Questionnaire;
 }

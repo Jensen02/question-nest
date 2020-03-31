@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:55:28
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-19 17:36:02
+ * @LastEditTime: 2020-03-28 13:51:43
  */
 
 import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
@@ -62,6 +62,8 @@ export class Radio {
   dNumber: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @ManyToOne(type => Questionnaire, questionnaire => questionnaire.radios)
+  @ManyToOne(type => Questionnaire, questionnaire => questionnaire.radios, {
+    onDelete: 'CASCADE'
+  })
   questionnaire: Questionnaire;
 }

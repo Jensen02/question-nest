@@ -5,7 +5,7 @@
  * @Author: Jensen
  * @Date: 2020-03-19 00:21:24
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-22 00:49:11
+ * @LastEditTime: 2020-03-28 13:54:21
  */
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
 import { Multiple } from '../enties/multiple.entity'
@@ -28,7 +28,8 @@ export class Templete {
   description: string;         // 问卷描述
 
   @Column({
-    nullable: true
+    // nullable: true
+    default: ''
   })
   filePath: string;            // 问卷封面图片路径
 
@@ -38,7 +39,8 @@ export class Templete {
   attendNumber: number;        // 已参加问卷人数
 
   @Column({
-    nullable: true
+    // nullable: true,
+    default: 0
   })
   personLimit: number;         // 问卷限制人数
 

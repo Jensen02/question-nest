@@ -5,7 +5,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 17:55:58
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-27 23:57:00
+ * @LastEditTime: 2020-03-28 13:52:51
  */
 
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
@@ -27,7 +27,8 @@ export class Questionnaire {
   description: string;         // 问卷描述
 
   @Column({
-    nullable: true,
+    // nullable: true,
+    default: ''
   })
   filePath: string;            // 问卷封面图片路径
 
@@ -60,22 +61,19 @@ export class Questionnaire {
 
   @OneToMany(type => Radio, radio => radio.questionnaire, {
     eager: true,
-    cascade: true,
-    onDelete: 'CASCADE'
+    cascade: true
   })
   radios: Radio[];
 
   @OneToMany(type => Answer, answer => answer.questionnaire, {
     eager: true,
-    cascade: true,
-    onDelete: 'CASCADE'
+    cascade: true
   })
   answers: Answer[];
 
   @OneToMany(type => Judge, judge => judge.questionnaire, {
     eager: true,
-    cascade: true,
-    onDelete: 'CASCADE'
+    cascade: true
   })
   judges: Judge[];
 

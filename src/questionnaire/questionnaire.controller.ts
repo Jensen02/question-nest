@@ -4,7 +4,7 @@
  * @Author: Jensen
  * @Date: 2020-03-11 18:02:52
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-25 13:47:30
+ * @LastEditTime: 2020-03-31 17:23:39
  */
 import { Controller, Body, Post, Get, Query } from '@nestjs/common';
 import { randomWord } from '../utils';
@@ -142,5 +142,14 @@ export class QuestionnaireController {
     }
     const rController = await this.questionnaireService.recoverQuestionnaireWithId(id);
     return rController;
+  }
+
+  // 提交问卷
+  @Post('submit/update')
+  async submitQuestionnaire(@Body() body: any) {
+    const { id, radio, multiple, judge, answer } = body;
+    const data = { id, radio, multiple, judge, answer };
+    const sController = await this.questionnaireService.submitQuestionnaire(data);
+    return sController;
   }
 }

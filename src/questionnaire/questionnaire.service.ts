@@ -4,13 +4,15 @@
  * @Author: Jensen
  * @Date: 2020-03-11 18:03:22
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-25 23:56:44
+ * @LastEditTime: 2020-03-31 17:21:35
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Equal, Not } from 'typeorm';
+import { getRepository, Repository, Equal, Not } from 'typeorm';
+import * as moment from 'moment';
 import { Questionnaire } from './questionnaire.entity';
+import { Radio, Multiple, Answer, Judge } from '../enties'
 
 @Injectable()
 export class QuestionnaireService {
@@ -129,5 +131,114 @@ export class QuestionnaireService {
         data: rService
       };
     }
+  }
+  
+  // 提交问卷
+  async submitQuestionnaire(data: any) {
+    const { id, radio, multiple, judge, answer } = data;
+    // 获取问卷已提交人数、问卷限制人数、问卷截止时间
+    const sService = await this.questionnaireRepository.findOne(id, {
+      select: ['attendNumber', 'personLimit', 'endTime']
+    });
+    const { attendNumber, personLimit, endTime } = sService;
+    // 判断问卷提交人数是否已达到限制人数
+    if ((personLimit > 0 && attendNumber < personLimit) || personLimit <= 0) {
+      return {
+        code: 0,
+        message: '该问卷提交数量已经达到限制人数，无法再提交！',
+        data: {}
+      };
+    }
+    // 判断问卷提交截止时间已过
+    if (moment(endTime).isBefore(moment().format('YYYY-MM-DD'))) {
+      return {
+        code: 0,
+        message: '问卷提交时间已过，无法提交',
+        data: {}
+      };
+    }
+
+    const uRadio = await this.submitRadio(radio);
+    const uMultiple = await this.submitMultiple(multiple);
+    const uJudge = await this.submitJudge(judge);
+    const uAnswer = await this.submitAnswer(answer);
+    
+    if (uAnswer && uJudge && uMultiple && uRadio) {
+      return {
+        code: 0,
+        message: '问卷提交失败',
+        data: {}
+      };
+    }
+    return {
+      code: 1,
+      message: '问卷提交成功',
+      data: {}
+    };
+  }
+
+  // 更新单选题目
+  async submitRadio(data: any) {
+    if (!data) {
+      return true;
+    }
+    const radioRepository = getRepository(Radio);
+    for (const [id, value] of data.entries()) {
+      const radio = radioRepository.create({ id });
+      const uService = await radioRepository.increment(radio, value, 1);
+      if (!uService) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  // 更新多选题目
+  async submitMultiple(data: any) {
+    if (!data) {
+      return true;
+    }
+    const multipleRepository = getRepository(Multiple);
+    for (const [id, value] of data.entries()) {
+      const multiple = multipleRepository.create({ id });
+      const uService = await multipleRepository.increment(multiple, value, 1);
+      if (!uService) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // 更新判断题目
+  async submitJudge(data: any) {
+    if (!data) {
+      return true;
+    }
+    const judgeRepository = getRepository(Judge);
+    for (const [id, value] of data.entries()) {
+      const judge = judgeRepository.create({ id });
+      const uService = await judgeRepository.increment(judge, value, 1);
+      if (!uService) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // 更新简答题目
+  async submitAnswer(data: any) {
+    if (!data) {
+      return true;
+    }
+    const answerRepository = getRepository(Answer);
+    for (const [id, answer] of data.entries()) {
+      const uService = await answerRepository.update(id, {
+        answer
+      });
+      if (!uService) {
+        return false;
+      }
+    }
+    return true;
   }
 }
